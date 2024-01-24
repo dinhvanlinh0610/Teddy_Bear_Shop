@@ -8,43 +8,39 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
 // Thêm sản phẩm vào giỏ hàng
 if (isset($_POST['add_to_cart'])) {
     $product_id = $_POST['product_id'];
-    $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
 
-    // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của user hay chưa
-    $sqlCheck = "SELECT * FROM carts WHERE user_id = {$_SESSION['user_id']} AND product_id = $product_id";
-    $resultCheck = $conn->query($sqlCheck);
-
-    if ($resultCheck->num_rows > 0) {
-        // Nếu sản phẩm đã tồn tại, cập nhật số lượng
-        $sqlUpdate = "UPDATE carts SET quantity = quantity + $quantity WHERE user_id = {$_SESSION['user_id']} AND product_id = $product_id";
-        $conn->query($sqlUpdate);
+    // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+    if (isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id]['quantity'] += 1;
     } else {
-        // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
-        $sqlInsert = "INSERT INTO carts (user_id, product_id, quantity) VALUES ({$_SESSION['user_id']}, $product_id, $quantity)";
-        $conn->query($sqlInsert);
-    }
+        // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
+        $sql = "SELECT * FROM products WHERE id = $product_id";
+        $result = $conn->query($sql);
 
-    header("Location: cart.php");
-    exit();
+        if ($result->num_rows > 0) {
+            $product = $result->fetch_assoc();
+
+            $_SESSION['cart'][$product_id] = [
+                'id' => $product['id'],
+                'name' => $product['name'],
+                'price' => $product['price'],
+                'quantity' => 1,
+            ];
+        }
+    }
 }
 
 // Cập nhật số lượng sản phẩm trong giỏ hàng
 if (isset($_POST['update_cart'])) {
     foreach ($_POST['quantity'] as $product_id => $quantity) {
-        $quantity = intval($quantity);
-
         if ($quantity > 0) {
-            // Cập nhật số lượng sản phẩm
-            $sqlUpdate = "UPDATE carts SET quantity = $quantity WHERE user_id = {$_SESSION['user_id']} AND product_id = $product_id";
-            $conn->query($sqlUpdate);
+            $_SESSION['cart'][$product_id]['quantity'] = $quantity;
         } else {
             // Nếu số lượng là 0, xóa sản phẩm khỏi giỏ hàng
-            $sqlDelete = "DELETE FROM carts WHERE user_id = {$_SESSION['user_id']} AND product_id = $product_id";
-            $conn->query($sqlDelete);
+            unset($_SESSION['cart'][$product_id]);
         }
     }
 }
@@ -52,22 +48,21 @@ if (isset($_POST['update_cart'])) {
 // Xóa sản phẩm khỏi giỏ hàng
 if (isset($_GET['remove'])) {
     $product_id = $_GET['remove'];
-    $sqlDelete = "DELETE FROM carts WHERE user_id = {$_SESSION['user_id']} AND product_id = $product_id";
-    $conn->query($sqlDelete);
+    unset($_SESSION['cart'][$product_id]);
 }
 
 // Xóa toàn bộ giỏ hàng
 if (isset($_GET['clear'])) {
-    $sqlClear = "DELETE FROM carts WHERE user_id = {$_SESSION['user_id']}";
-    $conn->query($sqlClear);
+    unset($_SESSION['cart']);
 }
-
-// Lấy danh sách sản phẩm trong giỏ hàng của user
-$sqlCart = "SELECT products.*, carts.quantity FROM carts INNER JOIN products ON carts.product_id = products.id WHERE carts.user_id = {$_SESSION['user_id']}";
-$resultCart = $conn->query($sqlCart);
 
 // Tính tổng giá trị đơn hàng
 $total_price = 0;
+if (!empty($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $total_price += $item['price'] * $item['quantity'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,9 +105,9 @@ $total_price = 0;
         <h2>Giỏ Hàng</h2>
         <div class="row">
             <div class="col-md-8">
-                <?php if ($resultCart->num_rows > 0) : ?>
+                <?php if (!empty($_SESSION['cart'])) : ?>
                     <table class="table">
-                    <thead>
+                        <thead>
                             <tr>
                                 <th scope="col">Sản Phẩm</th>
                                 <th scope="col">Giá</th>
@@ -122,7 +117,7 @@ $total_price = 0;
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($item = $resultCart->fetch_assoc()) : ?>
+                            <?php foreach ($_SESSION['cart'] as $item) : ?>
                                 <tr>
                                     <td><?php echo $item['name']; ?></td>
                                     <td>$<?php echo $item['price']; ?></td>
@@ -139,8 +134,7 @@ $total_price = 0;
                                     <td><a href="cart.php?remove=<?php echo $item['id']; ?>"
                                             class="btn btn-danger btn-sm">Xóa</a></td>
                                 </tr>
-                                <?php $total_price += $item['price'] * $item['quantity']; ?>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                             <tr>
                                 <td colspan="3" class="text-right"><strong>Tổng Tiền:</strong></td>
                                 <td colspan="2">$<?php echo $total_price; ?></td>
