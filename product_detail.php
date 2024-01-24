@@ -85,13 +85,15 @@ if (isset($_GET['product_id'])) {
             <div class="col-md-6">
                 <p><strong>Mô tả:</strong> <?php echo $product['description']; ?></p>
                 <p><strong>Giá:</strong> $<?php echo $product['price']; ?></p>
-                <form method="post" action="product_detail.php?product_id=<?php echo $product_id; ?>">
-            <input type="hidden" name="add_to_cart" value="1">
-            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-            <label for="quantity">Số lượng:</label>
-            <input type="number" name="quantity" id="quantity" value="1" min="1">
-            <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
-        </form>
+                <p><strong>Loại:</strong> $<?php echo $product['type']; ?></p>
+                <p><strong>Kích cỡ:</strong> $<?php echo $product['size']; ?></p>
+                <form method="post" action="cart.php">
+                    <input type="hidden" name="add_to_cart" value="1">
+                    <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" name="quantity" id="quantity" value="1" min="1">
+                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+                </form>
     </section>
 
     <footer class="mt-5 text-center">
