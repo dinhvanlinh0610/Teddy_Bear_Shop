@@ -45,6 +45,7 @@ body {
 
 .card-body {
   padding: 15px;
+ 
 }
 
 .card-title {
@@ -65,3 +66,5 @@ body {
   margin-top: 10px;
   background-color: #3498db; /* Chọn màu xanh dương */
 }
+
+

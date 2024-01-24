@@ -33,8 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->store_result();
                 if ($stmt->num_rows > 0) {
                     $username_err = "This username is already taken.";
-                } else {
-                    $username = trim($_POST["username"]);
                 }
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -76,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 // Redirect to login page
                 header("location: login.php");
+                exit();
             } else {
                 echo "Something went wrong. Please try again later.";
             }
@@ -96,8 +95,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gấu Bông Shop</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .small-form {
+            max-width: 600px; /* Đặt giá trị tùy chỉnh cho kích thước chiều ngang */
+            /* max-height: 5520px; Đặt giá trị tùy chỉnh cho kích thước chiều dọc */
+            margin: auto; /* Căn giữa form */
+        }
+    </style>
 </head>
 
 <body>
@@ -132,33 +140,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <section class="container mt-4">
-        <h2>Register</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
+        <div class="card small-form">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Đăng Ký</h2>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                        <label>Tên Đăng Nhập</label>
+                        <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                        <span class="help-block"><?php echo $username_err; ?></span>
+                    </div>
+
+                    <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                        <label>Mật Khẩu</label>
+                        <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+                        <span class="help-block"><?php echo $password_err; ?></span>
+                    </div>
+
+                    <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+                        <label>Xác Nhận Mật Khẩu</label>
+                        <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
+                        <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Đăng Ký</button>
+                    </div>
+
+                    <div class="text-center">
+                        <p>Đã có tài khoản? <a href="login.php">Đăng nhập ngay</a>.</p>
+                        <p>hoặc đăng ký với:</p>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-google"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-github"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
-        </form>
+        </div>
     </section>
 
-    <footer class="mt-5 text-center">
-        <p>&copy; 2024 Gấu Bông Shop</p>
-    </footer>
+    <?php include('footer.php'); ?>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

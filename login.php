@@ -3,26 +3,43 @@ include_once('connection/connection.php');
 
 session_start();
 
+// Define variables and initialize with empty values
+$username = $password = "";
+$error = "";
+
+// Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['role'] = $user['role'];
-            header("Location: index.php");
-            exit();
-        } else {
-            $error = "Sai tên đăng nhập hoặc mật khẩu.";
-        }
+    // Validate username and password
+    if (empty(trim($username)) || empty(trim($password))) {
+        $error = "Please enter both username and password.";
     } else {
-        $error = "Sai tên đăng nhập hoặc mật khẩu.";
+        $sql = "SELECT * FROM users WHERE username = ?";
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("s", $param_username);
+            $param_username = $username;
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $user = $result->fetch_assoc();
+                    if (password_verify($password, $user['password'])) {
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['role'] = $user['role'];
+                        header("Location: index.php");
+                        exit();
+                    } else {
+                        $error = "Incorrect password.";
+                    }
+                } else {
+                    $error = "Username not found.";
+                }
+            } else {
+                $error = "Oops! Something went wrong. Please try again later.";
+            }
+            $stmt->close();
+        }
     }
 }
 ?>
@@ -35,70 +52,187 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gấu Bông Shop</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .small-form {
+            
+            max-width: 600px; /* Đặt giá trị tùy chỉnh cho kích thước chiều ngang */
+            margin: auto; /* Căn giữa form */
+        }
+        .footer {
+            background-color: #f8f1f1;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-heading {
+            color: #333;
+        }
+
+        .subscribe-form {
+            margin-top: 20px;
+        }
+        .footer-heading {
+            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .list-unstyled li a {
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .list-unstyled li a:hover {
+            color: #ff4081;
+        }
+        .ftco-footer-social {
+            display: inline-flex;
+            align-items: center;
+            list-style: none;
+        }
+        .ftco-footer-social a {
+            font-size: 24px;
+            color: #333;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .ftco-footer-social a:hover {
+            color: #ff4081;
+        }
+
+        .subscribe-form {
+            margin-top: 20px;
+        }
+
+        .submit {
+            background-color: #ff4081;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .submit:hover {
+            background-color: #e6005c;
+        }
+
+        .copyright {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .list-unstyled a {
+            color: #777;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .list-unstyled a:hover {
+            color: #ff4081;
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Gấu Bông Shop</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Gấu Bông Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Trang Chủ <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sản Phẩm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Giỏ Hàng</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng Nhập</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="cart.php" class="nav-link">Xem Giỏ Hàng</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Trang Chủ <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sản Phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Giỏ Hàng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cart.php" class="nav-link">Xem Giỏ Hàng</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 
-    <section class="container mt-4">
-        <h2>Login</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($error)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php  ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($error)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
-                <span class="help-block"><?php ?></span>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
-        </form>
-    </section>
+<section class="container mt-4">
+    <div class="card small-form">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Đăng Nhập</h2>
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-outline mb-4">
+                    <label>Tên Đăng Nhập </label>
+                    <input type="text" id="form2Example1" class="form-control" name="username" value="<?php echo $username; ?>" />
+                </div>
 
-    <footer class="mt-5 text-center">
-        <p>&copy; 2024 Gấu Bông Shop</p>
-    </footer>
+                <div class="form-outline mb-4">
+                    <label>Mật Khẩu</label>
+                    <input type="password" id="form2Example2" class="form-control" name="password" />
+                </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <div class="row mb-4">
+                    <div class="col d-flex justify-content-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                            <label class="form-check-label" for="form2Example31"> Remember me </label>
+                        </div>
+                    </div>
 
-    <!-- Your script includes here -->
+                    <div class="col">
+                        <a href="#!">Quên Mật Khẩu?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                <div class="text-center">
+                    <p>Chưa có tài khoản? <a href="register.php">Đăng Ký</a></p>
+                    <p>hoặc đăng nhập với:</p>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-google"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-github"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<?php include('footer.php'); ?>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your script includes here -->
 </body>
 
 </html>
