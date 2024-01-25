@@ -81,38 +81,38 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-4 mb-md-0 mb-4">
-                            <h2 class="footer-heading">Men</h2>
+                            <h2 class="footer-heading">Classic Bears</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#" class="py-1 d-block">Jeans</a></li>
-                                <li><a href="#" class="py-1 d-block">Jumpers</a></li>
-                                <li><a href="#" class="py-1 d-block">Leather</a></li>
-                                <li><a href="#" class="py-1 d-block">Shorts</a></li>
-                                <li><a href="#" class="py-1 d-block">Boots</a></li>
-                                <li><a href="#" class="py-1 d-block">Watches</a></li>
+                                <li><a href="#" class="py-1 d-block">Timeless Teddy</a></li>
+                                <li><a href="#" class="py-1 d-block">Vintage Hug Buddy</a></li>
+                                <li><a href="#" class="py-1 d-block">Traditional Cuddler</a></li>
+                                <li><a href="#" class="py-1 d-block">Nostalgia Bear</a></li>
+                                <li><a href="#" class="py-1 d-block">Classic Comforter</a></li>
+                                <li><a href="#" class="py-1 d-block">Heritage Snuggle Pal</a></li>
                             </ul>
                         </div>
                         <div class="col-md-4 mb-md-0 mb-4">
-                            <h2 class="footer-heading">Women</h2>
+                            <h2 class="footer-heading">Plush Friends</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#" class="py-1 d-block">Dresses</a></li>
-                                <li><a href="#" class="py-1 d-block">Jumpsuits</a></li>
-                                <li><a href="#" class="py-1 d-block">Shirts</a></li>
-                                <li><a href="#" class="py-1 d-block">T-shirts</a></li>
-                                <li><a href="#" class="py-1 d-block">Swearshirts</a></li>
-                                <li><a href="#" class="py-1 d-block">Jackets</a></li>
-                                <li><a href="#" class="py-1 d-block">Coats</a></li>
+                                <li><a href="#" class="py-1 d-block">Cozy Paws Pal</a></li>
+                                <li><a href="#" class="py-1 d-block">Soft Whiskers</a></li>
+                                <li><a href="#" class="py-1 d-block">Gentle Hug Companion</a></li>
+                                <li><a href="#" class="py-1 d-block">Velvet Nose Cuddly</a></li>
+                                <li><a href="#" class="py-1 d-block">Soothing Plush</a></li>
+                                <li><a href="#" class="py-1 d-block">Adorable Fluff</a></li>
+                                <li><a href="#" class="py-1 d-block">Sweetheart Snuggle</a></li>
                             </ul>
                         </div>
                         <div class="col-md-4 mb-md-0 mb-4">
-                            <h2 class="footer-heading">Kids</h2>
+                            <h2 class="footer-heading">Giant Huggables</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#" class="py-1 d-block">Shirts</a></li>
-                                <li><a href="#" class="py-1 d-block">T-shirts</a></li>
-                                <li><a href="#" class="py-1 d-block">Polos</a></li>
-                                <li><a href="#" class="py-1 d-block">Sweaters</a></li>
-                                <li><a href="#" class="py-1 d-block">Sweatshirts</a></li>
-                                <li><a href="#" class="py-1 d-block">Jackets</a></li>
-                                <li><a href="#" class="py-1 d-block">Watches</a></li>
+                                <li><a href="#" class="py-1 d-block">Jumbo Joyful</a></li>
+                                <li><a href="#" class="py-1 d-block">Mega Hug</a></li>
+                                <li><a href="#" class="py-1 d-block">Super-sized Snuggle</a></li>
+                                <li><a href="#" class="py-1 d-block">Big Love</a></li>
+                                <li><a href="#" class="py-1 d-block">Comfort Cuddler</a></li>
+                                <li><a href="#" class="py-1 d-block">King-size Hug Pal</a></li>
+                                <li><a href="#" class="py-1 d-block">Massive Cuddle Companion</a></li>
                             </ul>
                         </div>
                     </div>
@@ -146,9 +146,7 @@
                 <div class="col-md-6 col-lg-8">
                     <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY
                         3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights
-                        reserved | This template is made with <i class="ion-ios-heart"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+                        <p>&copy; 2024 Gấu Bông Shop</p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                 </div>
                 <div class="col-md-6 col-lg-4 text-md-right">

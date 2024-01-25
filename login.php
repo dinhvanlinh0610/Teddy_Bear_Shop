@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="styles.css">
     <style>
         .small-form {
-            
+            /* background-color: #f8f1f1; */
             max-width: 600px; /* Đặt giá trị tùy chỉnh cho kích thước chiều ngang */
             margin: auto; /* Căn giữa form */
         }
