@@ -28,39 +28,8 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="index.php">Gấu Bông Shop</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Trang Chủ <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sản Phẩm</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Giỏ Hàng</a>
-                    </li> -->
-                    <li class="nav-item">
-                    <?php if (isset($_SESSION['user_id'])) : ?>
-                        <a class="nav-link" href="logout.php">Đăng Xuất</a>
-                    <?php else : ?>
-                        <a class="nav-link" href="#">Đăng Nhập</a>
-                    <?php endif; ?>
-                    </li>
-                    <li class="nav-item">
-                        <a href="cart.php" class="nav-link">Xem Giỏ Hàng</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
+<?php include('header.php'); ?>
+<main>
     <section class="container mt-4">
         <!-- Thêm ô nhập liệu và nút tìm kiếm -->
         <div class="search-container">
@@ -379,7 +348,7 @@ if (!isset($_SESSION['user_id'])) {
       
     </div>
     </section>
-
+    </main>
     <?php include('footer.php'); ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

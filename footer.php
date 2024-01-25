@@ -4,6 +4,7 @@
             background-color: #f8f1f1;
             padding-top: 30px;
             padding-bottom: 30px;
+            margin-top: 310px;
         }
 
         .footer-heading {
@@ -75,7 +76,7 @@
             color: #ff4081;
         }
     </style>
-<footer class="footer mt-5">
+<footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">

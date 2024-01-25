@@ -139,34 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Gấu Bông Shop</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Trang Chủ <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sản Phẩm</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Giỏ Hàng</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Đăng Nhập</a>
-                </li>
-                <li class="nav-item">
-                    <a href="cart.php" class="nav-link">Xem Giỏ Hàng</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<?php include('header.php'); ?>
 
 <section class="container mt-4">
     <div class="card small-form">

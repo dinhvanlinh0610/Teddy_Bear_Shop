@@ -12,12 +12,7 @@
 
 <body>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="index.php">Gấu Bông Shop</a>
-            <!-- Add your navigation links here -->
-        </nav>
-    </header>
+<?php include('header.php'); ?>
 
     <section class="container mt-4">
         <div class="alert alert-danger" role="alert">
